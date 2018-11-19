@@ -30,3 +30,10 @@
     transform: rotate(360deg);
   }
 }
+
+.toolbar {
+  padding: 20px;
+  background: lightgray;
+  border: 1px solid gray;
+  height: 20px;
+}

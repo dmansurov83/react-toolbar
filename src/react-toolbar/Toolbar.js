@@ -26,8 +26,10 @@ class Toolbar extends Component {
         this.rafTimer = requestAnimationFrame(() => this.forceUpdate());
     };
 
-    onResize = ({bounds}) => {
-        const {width} = bounds;
+    onResize = ({client: size}) => {
+        let {width} = size;
+        const computedStyle = getComputedStyle(this.ref);
+        width -= parseFloat(computedStyle.paddingLeft) + parseFloat(computedStyle.paddingRight);
         this.setState({width});
     };
 
@@ -60,11 +62,14 @@ class Toolbar extends Component {
         return (
             <MeasureContext.Provider value={this.ctx}>
                 <Measure
-                    bounds
+                    client
                     onResize={this.onResize}>
                     {({measureRef}) =>
                         <div
-                            ref={measureRef}
+                            ref={ref => {
+                                this.ref = ref;
+                                measureRef(ref);
+                            }}
                             className={cn(className)}
                             {...props}>
                             {visible}
@@ -73,6 +78,8 @@ class Toolbar extends Component {
                             </ToolbarItem>
                         </div>}
                 </Measure>
+                <div>Hidden elements:</div>
+                <div>{hidden}</div>
             </MeasureContext.Provider>
         );
     }

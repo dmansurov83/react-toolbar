@@ -10,7 +10,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <Toolbar>
+                <Toolbar className="toolbar">
                     {items.map(item =>
                         <ToolbarItem key={item}>
                             <button>{`item ${item}`}</button>
